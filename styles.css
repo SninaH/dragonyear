@@ -4,9 +4,6 @@
   body {
     --gap: 1rem;
     font-family: ui-sans-serif, system-ui, snas-serif;
-    display: flex;
-    align-items: center;
-    
   }
   button {
     background-color: hsl(90, 50%, 30%);
@@ -34,12 +31,13 @@
     margin: 0 auto;
     max-width: 30rem;
   }
-  input, textarea {
+  textarea {
     border: 1px solid #BBB;
     display: block;
     padding: calc(var(--gap) / 2);
     resize: vertical;
     width: 100%;
+    height: fit-content;
   }
   label {
     display: block;

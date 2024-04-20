@@ -1,8 +1,8 @@
 
 
 const spoken_result = document.getElementById('spoken_result'); //text area v katerega vpisujemo 
-const JSONfileName = "image"
 var field_idx = 0
+var ans_type = null;
 
 function init() {
     window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -24,21 +24,19 @@ function init() {
         console.log(speech.text);
         
         const tag = document.activeElement.nodeName;
+        document.getElementById('isFinal').innerText = audio.isFinal;
         if (audio.isFinal){
-            if (tag === 'INPUT' || tag === 'TEXTAREA') {
-            
-                document.activeElement.value += speech.text;
-            
+            spoken_result.value += speech.text
+            console.log(spoken_result.value)
+            console.log("##############################################                  ")
+            if (speech.text.search("izbriši") > -1){
+                console.log("IZBRISI TEXT");
+                spoken_result.value = "";
+                console.log(audio);
+            } else if (speech.text.search("naprej") > -1) {
+                console.log("NAPREJ");
+                addAnswerJSON(field_idx, spoken_result.value.replace("naprej"));
             }
-            
-                spoken_result.value += speech.text
-                console.log(spoken_result.value)
-                console.log("##############################################                  ")
-                if (speech.text.search("izbriši") > -1){
-                    console.log("IZBRISI TEXT");
-                    spoken_result.innerText = "";
-                    console.log(audio);
-                }
         }
         
         result.innerText = speech.text;
@@ -66,12 +64,17 @@ function loadQuestion(field_idx){
 
     console.log(field_name, answer_type);
 
-    return [field_name, answer_type]; 
+    document.getElementById('question').innerText = field_name;
+    ans_type = answer_type;
 }
 
 function addAnswerJSON(field_idx, answer){
     json_data[field_idx].answer = answer;
+    console.log("-----------------answer:")
+    console.log(json_data[field_idx].answer)
+    field_idx += 1;
+    loadQuestion(field_idx);
 }
 
-
+loadQuestion(field_idx);
 init();
