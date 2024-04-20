@@ -4,6 +4,9 @@
   body {
     --gap: 1rem;
     font-family: ui-sans-serif, system-ui, snas-serif;
+    display: flex;
+    align-items: center;
+    
   }
   button {
     background-color: hsl(90, 50%, 30%);

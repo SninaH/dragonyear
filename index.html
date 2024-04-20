@@ -3,6 +3,169 @@
 <head>
     <title>Real-time Speech Recognition and fill forms</title>
     <link rel="stylesheet" href="styles.css">
+    <script>var json_data = [
+        {
+            "field_name": "Name",
+            "relative_location_of_expected_answer": "Right",
+            "expected_answer_type": "TEXT",
+            "bbox": [
+                [
+                    157,
+                    135
+                ],
+                [
+                    207,
+                    135
+                ],
+                [
+                    207,
+                    151
+                ],
+                [
+                    157,
+                    151
+                ]
+            ]
+        },
+        {
+            "field_name": "Street",
+            "relative_location_of_expected_answer": "Right",
+            "expected_answer_type": "TEXT",
+            "bbox": [
+                [
+                    157,
+                    171
+                ],
+                [
+                    207,
+                    171
+                ],
+                [
+                    207,
+                    187
+                ],
+                [
+                    157,
+                    187
+                ]
+            ]
+        },
+        {
+            "field_name": "ZIP Code / City",
+            "relative_location_of_expected_answer": "Right",
+            "expected_answer_type": "TEXT",
+            "bbox": [
+                [
+                    93,
+                    203
+                ],
+                [
+                    161,
+                    203
+                ],
+                [
+                    161,
+                    223
+                ],
+                [
+                    93,
+                    223
+                ]
+            ]
+        },
+        {
+            "field_name": "Country",
+            "relative_location_of_expected_answer": "Right",
+            "expected_answer_type": "Germany",
+            "bbox": [
+                [
+                    144,
+                    240
+                ],
+                [
+                    207,
+                    240
+                ],
+                [
+                    207,
+                    261
+                ],
+                [
+                    144,
+                    261
+                ]
+            ]
+        },
+        {
+            "field_name": "Email",
+            "relative_location_of_expected_answer": "Right",
+            "expected_answer_type": "TEXT",
+            "bbox": [
+                [
+                    161,
+                    409
+                ],
+                [
+                    207,
+                    409
+                ],
+                [
+                    207,
+                    425
+                ],
+                [
+                    161,
+                    425
+                ]
+            ]
+        },
+        {
+            "field_name": "Phone",
+            "relative_location_of_expected_answer": "Right",
+            "expected_answer_type": "TEXT",
+            "bbox": [
+                [
+                    155,
+                    445
+                ],
+                [
+                    207,
+                    445
+                ],
+                [
+                    207,
+                    461
+                ],
+                [
+                    155,
+                    461
+                ]
+            ]
+        },
+        {
+            "field_name": "SMS",
+            "relative_location_of_expected_answer": "Right",
+            "expected_answer_type": "TEXT",
+            "bbox": [
+                [
+                    165,
+                    479
+                ],
+                [
+                    207,
+                    479
+                ],
+                [
+                    207,
+                    497
+                ],
+                [
+                    165,
+                    497
+                ]
+            ]
+        }
+    ]</script>
 </head>
 <body>
     <form>
@@ -12,11 +175,12 @@
           <button type="button" id="toggle">Toggle listening</button>
           <p>Click on “Toggle listening”, then click on the form field, where you want to insert speeched text. Pause a bit after a sentence to process the speech-data. This demo only works with language <strong>“sl-SI”</strong>, only in Chrome, and only if you allow the microphone on this page!</p>
           <label>Input<input /></label>
-          <label>Text area<textarea></textarea></label>
-          <p id="spoken_result"></p>
+          <label>Text area<textarea id="spoken_result"></textarea></label>
+          
         </fieldset>
       </form>
       
     <script src="js_files/speech_write.js"></script>
+    <script src="js_files/image.json   "></script>
 </body>
 </html>
