@@ -35,7 +35,7 @@ function init() {
                 console.log(audio);
             } else if (speech.text.search("naprej") > -1) {
                 console.log("NAPREJ");
-                addAnswerJSON(field_idx, spoken_result.value.replace("naprej"));
+                addAnswerJSON(spoken_result.value.replace("naprej", ""));
             }
         }
         
@@ -58,7 +58,7 @@ function init() {
     }
   }
 
-function loadQuestion(field_idx){
+function loadQuestion(){
     field_name = json_data[field_idx].field_name;
     answer_type = json_data[field_idx].expected_answer_type; // None (vpisi text) ali pa list[str] (izberi moznost)
 
@@ -68,11 +68,18 @@ function loadQuestion(field_idx){
     ans_type = answer_type;
 }
 
-function addAnswerJSON(field_idx, answer){
+function addAnswerJSON(answer){
     json_data[field_idx].answer = answer;
     console.log("-----------------answer:")
     console.log(json_data[field_idx].answer)
+    spoken_result.value = "";
     field_idx += 1;
+    if(field_idx >= json_data.length){
+        console.log(json_data);
+        return 0;
+        // TODO: pojdi na naslednjo spletno stran
+    }
+    console.log(field_idx);
     loadQuestion(field_idx);
 }
 
