@@ -26,16 +26,24 @@ function init() {
         const tag = document.activeElement.nodeName;
         document.getElementById('isFinal').innerText = audio.isFinal;
         if (audio.isFinal){
-            spoken_result.value += speech.text
-            console.log(spoken_result.value)
-            console.log("##############################################                  ")
-            if (speech.text.search("izbriši") > -1){
-                console.log("IZBRISI TEXT");
-                spoken_result.value = "";
-                console.log(audio);
-            } else if (speech.text.search("naprej") > -1) {
-                console.log("NAPREJ");
-                addAnswerJSON(spoken_result.value.replace("naprej", ""));
+            if(ans_type == null){
+                spoken_result.value += speech.text
+                console.log(spoken_result.value)
+                console.log("##############################################                  ")
+                if (speech.text.search("izbriši") > -1){
+                    console.log("IZBRISI TEXT");
+                    spoken_result.value = "";
+                    console.log(audio);
+                } else if (speech.text.search("naprej") > -1) {
+                    console.log("NAPREJ");
+                    addAnswerJSON(spoken_result.value.replace("naprej", ""));
+                }
+            } else {
+                ans_type.forEach((item) => {
+                    if (speech.text.includes(item.toLowerCase())){
+                        addAnswerJSON(item)
+                    }
+                });
             }
         }
         
@@ -65,6 +73,16 @@ function loadQuestion(){
     console.log(field_name, answer_type);
 
     document.getElementById('question').innerText = field_name;
+    if(answer_type != null){
+        list = document.getElementById("mozniOdgovori");
+        instructions = document.createElement("label");
+        instructions.innerText = "recite eno od spodnjih možnosti";
+        answer_type.forEach((item) => {
+            let li = document.createElement("li");
+            li.innerText = item;
+            list.appendChild(li);
+        });
+    }
     ans_type = answer_type;
 }
 

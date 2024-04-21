@@ -28,6 +28,29 @@
             ]
         },
         {
+            "field_name": "Gender",
+            "relative_location_of_expected_answer": "Right",
+            "expected_answer_type": ["moški", "ženski"],
+            "bbox": [
+                [
+                    157,
+                    135
+                ],
+                [
+                    207,
+                    135
+                ],
+                [
+                    207,
+                    151
+                ],
+                [
+                    157,
+                    151
+                ]
+            ]
+        },
+        {
             "field_name": "Street",
             "relative_location_of_expected_answer": "Right",
             "expected_answer_type": "TEXT",
@@ -176,7 +199,7 @@
           <p id="isFinal" style="color: gray;"></p>
           <p>Click on “Toggle listening”, then click on the form field, where you want to insert speeched text. Pause a bit after a sentence to process the speech-data. This demo only works with language <strong>“sl-SI”</strong>, only in Chrome, and only if you allow the microphone on this page!</p>
           <label id="question">Text area</label>
-          <
+          <ul id="mozniOdgovori"></ul>
           <textarea id="spoken_result"></textarea>
           
         </fieldset>
