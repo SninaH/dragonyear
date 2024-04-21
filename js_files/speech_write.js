@@ -1,3 +1,7 @@
+localStorage.setItem("ime in priimek", "Nina");
+
+
+
 
 
 const spoken_result = document.getElementById('spoken_result'); //text area v katerega vpisujemo 
@@ -90,16 +94,30 @@ function loadQuestion(){
     field_name = json_data[field_idx].field_name;
     answer_type = json_data[field_idx].expected_answer_type; // None (vpisi text) ali pa list[str] (izberi moznost)
     form_instruction = json_data[field_idx].form_instructions;
+    token = field_name.toLowerCase().replace(/[:*\.]+/g, '');
+    local_history_suggestion = localStorage.getItem(token);
+    if(local_history_suggestion != null){
+        document.getElementById('suggestion').innerText = "suggestion: " + local_history_suggestion;
+    }else{
+        document.getElementById('suggestion').innerText = "";
+    }
 
     console.log(json_data[field_idx]);
 
     document.getElementById('question').innerText = field_name;
     if(form_instruction != null){
         document.getElementById("instructions").innerText = form_instruction
+    }else{
+        document.getElementById("instructions").innerText = ""
     }
 
+    // izbrisi seznam moznosti, ki si (morda) napisal v prejsnjem vprasanju
+    list = document.getElementById("mozniOdgovori");
+    while (list.firstChild) {
+        list.removeChild(list.firstChild);
+    }   
     if(Array.isArray(answer_type)){
-                    
+                 
         list = document.getElementById("mozniOdgovori");
         instructions = document.createElement("label");
         instructions.innerText = "recite eno od spodnjih možnosti";
@@ -108,17 +126,14 @@ function loadQuestion(){
             li.innerText = item;
             list.appendChild(li);
         });
-    } else {
-        //izbrisi seznam moznosti, ki si (morda) napisal v prejsnjem vprasanju
-        list = document.getElementById("mozniOdgovori");
-        while (list.firstChild) {
-            list.removeChild(list.firstChild);
-        }
-    }
+    } 
     ans_type = answer_type;
 }
 
 function addAnswerJSON(inputted_answer){
+    token = json_data[field_idx].field_name.toLowerCase().replace(/[:*\.]+/g, '');
+    localStorage.setItem(token, inputted_answer);
+
     console.log(inputted_answer);
     if(field_idx >= json_data.length){
         console.log(json_data);

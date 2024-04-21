@@ -17,12 +17,17 @@
           <p>Click on “Toggle listening”, then speak the answer or write into the text field. Pause a bit after a sentence to process the speech-data. This demo only works with language <strong>“sl-SI”</strong>, only in Chrome, and only if you allow the microphone on this page!</p>
           <p>If it's taking long time to write into textfield what you said, try pressing listnening button to stop recording your voice (it will speed up the process of writing)</p>
           <label>voice commands:</label>
+          
           <ul><li>naprej = go to next field</li>
             <li>izbriši = delete what you have written</li>
           </ul>
+          
           <label id="question" style="font-weight: bold;">Text area</label>
           <p id="instructions"></p>
+          <p id="suggestion" style="color: blueviolet;"></p>
+
           <ul id="mozniOdgovori"></ul>
+          
           <textarea id="spoken_result"></textarea>
           <button type="button" id="next">Next</button>
           
