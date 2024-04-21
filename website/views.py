@@ -1,7 +1,7 @@
 import html
 import json
 
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render
 from website.models import UploadedFile
 from website.forms import UploadFileForm
@@ -15,14 +15,15 @@ from website.helper_functions.cloudinar_api import upload_image
 from website.helper_functions.img_to_pdf import convert_image_to_pdf
 
 
-# Create your views here.
 def index(request):
     if request.method == "GET":
         return render(request, 'index.html', {'form': 'form'})
+    
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            # handle_uploaded_file(request.FILES['file']) delaj z datoteko
+
+            # delaj z datoteko
             file = form.cleaned_data['file']
             if file.content_type != 'application/pdf':
                 print("File is not a pdf")
@@ -30,27 +31,21 @@ def index(request):
 
             title = form.cleaned_data['file'].name
             ufile = UploadedFile.objects.create(title=title, file=file)
-            print("File uploaded")
+            print("INFO: File uploaded")
 
             # make images from pdf
             image = convert_from_path(ufile.file.path)[0]
             image.save(f"imaged_pdfs/{ufile.id}.jpg")
-            print("Image saved")
+            print("INFO: Image saved")
+
             # upload image so we can send it to gpt -- hack
             image_url = upload_image(f"imaged_pdfs/{ufile.id}.jpg", f"{ufile.id}")
 
-            # here
-            print("Getting fields info...")
+            print("INFO: Getting fields info...")
             fields = get_fields_info(image_url, f"imaged_pdfs/{ufile.id}.jpg")
             print(type(fields))
-            print("Got fields info:")
+            print("INFO: Got fields info:")
             print(fields)
-            #fields_str = json.dumps(fields).replace("\"", "'")
-            # fields_str = json.dumps(fields)
-            # print(fields_str)
-
-
-            # return HttpResponseRedirect(f'/fill?id={ufile.id}')
             return render(request, 'fill.html', {'fields': fields, 'id': ufile.id})
         else:
             print("Form is not valid")
@@ -86,17 +81,4 @@ def preview(request):
 
 
         return HttpResponse(status=200)
-
-        # base_url = request.build_absolute_uri('/')
-        # print("Base url:", base_url)
-        # return render(request, 'preview.html', {'imageUrl': f'{base_url}/static/{image_id}.jpg'})
-
-# def download_pdf(request):
-#     id = request.GET.get("image_id", "")
-#     image_path = f"imaged_pdfs/{id}_filled.jpg"
-#     pdf_path = f"imaged_pdfs/{id}.pdf"
-#     convert_image_to_pdf(image_path, pdf_path)
-#
-#     response = HttpResponse(f"/imaged_pdfs/{id}.pdf", content_type='application/pdf')
-#     response['Content-Disposition'] = f'attachment; filename="{id}.pdf"'
-#     return response
+    

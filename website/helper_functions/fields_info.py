@@ -47,13 +47,12 @@ def get_fields_info(image_url, image_path):
     fields = marvin.beta.cast(
         myform,
         target=list[Field],
-        # instructions=f"Get me a list of field names together with info about expected answer. Location of expected answer is right or down from the field name. Expected answer type is either a list of possible values to choose from listed in the form or it is None which means that text answer is required.",
-        instructions="Get me a list of field names in original language together with info about expected answer. Location of expected answer is right or down from the field name.\
-            Expected answer type is either a list of possible values to choose from listed in the form or it is None which means that text answer is required.\
+        instructions="Get me a list of field names in original language together with info about expected answer.\
+              Location of expected answer is right or down from the field name.\
+            Expected answer type is either a list of possible values to choose from listed in the form or it is \
+                None which means that text answer is required.\
                 Instructions should any additional instructions about that field if provided in the document. Required should be True only if field is required"
     )
-
-    print(fields)
 
     reader = easyocr.Reader(['en', 'en'])
     result = reader.readtext(image_path)
@@ -80,23 +79,11 @@ def get_fields_info(image_url, image_path):
                 for pi, p in enumerate(bbox):
                     bbox[pi] = [int(p[0]),int(p[1])]
                 legit[matchi]["bbox"] = bbox
-    for li, l in enumerate(legit):
+
+    for l in legit:
         if "bbox" not in l:
             legit.remove(l)
-            # poizvedi še enkrat
-            # return get_fields_info(image_url, image_path)
 
-    # print(legit)
     legit = json.dumps(legit)
     legit = legit.replace("\n", "")
     return legit
-
-
-# get_fields_info(image_url = "https://experience.sap.com/fiori-design-web/wp-content/uploads/sites/5/2021/07/Form-Several-forms-on-a-page-1.92-1.png",
-#                 image_path = "Form-Several-forms-on-a-page-1.92-1.png")
-
-
-# get_fields_info(image_url="https://eobrazci.si/wp-content/uploads/2020/03/vzorcni_obrazec.png",
-#                 image_path="vzorcni_obrazec.png")
-
-
