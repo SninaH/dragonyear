@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Leto Zmaja</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin: 0;
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+      }
+      .card {
+        background: white;
+        border-radius: 2px;
+        display: inline-block;
+        margin: 1rem;
+        position: relative;
+        max-width: 70vw;
+        /*max-height: 90vh;*/
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      }
+      h1 {
+        color: #333;
+        text-align: center;
+        padding-top: 20vh;
+      }
+      .card img {
+        max-width: 90%;
+        height: auto;
+        display: block;
+        margin: 20px auto;
+      }
+    </style>
+    <script>
+      const image_id = new URLSearchParams(window.location.search).get('image_id');
+    </script>
+  </head>
+  <body>
+  <div>
+      <h1>Preview</h1>
+<!--    <button onclick="download()">Download</button>-->
+<!--    <a href=`static/${image_id}.pdf`>Download</a>-->
+     <a id="aaa" href="/static/{{ pdf_id }}.pdf" download>Download PDF</a>
+    <script>
+    </script>
+  </div>
+    <div class="card">
+      <img src="{{ imageUrl }}" alt="Uploaded file">
+    </div>
+  </body>
+</html>
