@@ -37,7 +37,8 @@ function init() {
                         
                     } else if (speech.text.search("naprej") > -1) {
                         console.log("NAPREJ");
-                        addAnswerJSON(spoken_result.value.replace("naprej", ""));
+                        spoken_result.value.replace("naprej", "")
+                        addAnswerJSON(spoken_result.value);
                     }
                 } else if (Array.isArray(ans_type)){
                     ans_type.forEach((item) => {
@@ -69,10 +70,14 @@ function init() {
 
         //next button adds content in the text box to the json
         next.addEventListener('click', () => {
-            answ = spoken_result.value.replace("naprej", "");
+            spoken_result.value.replace("naprej", "");
+            answ = spoken_result.value;
+            console.log("***********************")
+            console.log(answ);
             if(answ.length < 1){
                 answ = speech.text
             }
+            console.log(answ);
             addAnswerJSON(answ);
         })
     } else {
@@ -81,12 +86,18 @@ function init() {
   }
 
 function loadQuestion(){
+    if(field_idx >= json_data.length){return 0}
     field_name = json_data[field_idx].field_name;
     answer_type = json_data[field_idx].expected_answer_type; // None (vpisi text) ali pa list[str] (izberi moznost)
+    form_instruction = json_data[field_idx].form_instructions;
 
-    console.log(field_name, answer_type);
+    console.log(json_data[field_idx]);
 
     document.getElementById('question').innerText = field_name;
+    if(form_instruction != null){
+        document.getElementById("instructions").innerText = form_instruction
+    }
+
     if(Array.isArray(answer_type)){
                     
         list = document.getElementById("mozniOdgovori");
@@ -107,20 +118,23 @@ function loadQuestion(){
     ans_type = answer_type;
 }
 
-function addAnswerJSON(answer){
-    if(answer.length < 1){
-        answer = "N/A"
-    }
-    json_data[field_idx].answer = answer;
-    console.log("-----------------answer:")
-    console.log(json_data[field_idx].answer)
-    spoken_result.value = "";
-    field_idx += 1;
+function addAnswerJSON(inputted_answer){
+    console.log(inputted_answer);
     if(field_idx >= json_data.length){
         console.log(json_data);
         return 0;
         // TODO: pojdi na naslednjo spletno stran
     }
+    if(inputted_answer ==  null || inputted_answer.length < 1){
+        inputted_answer = "N/A"
+    }
+    
+    json_data[field_idx].answer = inputted_answer;
+    console.log("-----------------answer:");
+    console.log(json_data[field_idx]);
+    spoken_result.value = "";
+    field_idx += 1;
+    
     console.log(field_idx);
     loadQuestion(field_idx);
 }

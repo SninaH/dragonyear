@@ -39,7 +39,7 @@ button:hover {
 }
 
 p {
-  color: red;
+  color: darkgreen;
   text-align: center;
   margin: 10px 0;
 }
@@ -65,4 +65,8 @@ ul {
 
 #next {
   margin-top: 10px;
+}
+
+button:active {
+  background-color: #777; /* Change color when button is pressed */
 }
