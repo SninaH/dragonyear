@@ -7,7 +7,7 @@ We created a web app where you can fill pdf documents just by speaking.
 
 ---
 
-##once on webpage:
+## once on webpage:
 
 1. upload a pdf document and press next
 2. you will be redirected to the page where you can fill forms with your voice by pressing listen button at the top or by typing into the text box
