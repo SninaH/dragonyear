@@ -38,12 +38,14 @@ function init() {
                     console.log("NAPREJ");
                     addAnswerJSON(spoken_result.value.replace("naprej", ""));
                 }
-            } else {
+            } else if (Array.isArray(ans_type)){
                 ans_type.forEach((item) => {
                     if (speech.text.includes(item.toLowerCase())){
                         addAnswerJSON(item)
                     }
                 });
+            } else {
+                console.log("ERROR: wrong ans_type")
             }
         }
         
@@ -63,6 +65,10 @@ function init() {
           speech.recognition.stop();
         }
       })
+
+      next.addEventListener('click', () => {
+        addAnswerJSON(spoken_result.value.replace("naprej", ""));
+      })
     }
   }
 
@@ -73,7 +79,8 @@ function loadQuestion(){
     console.log(field_name, answer_type);
 
     document.getElementById('question').innerText = field_name;
-    if(answer_type != null){
+    if(Array.isArray(answer_type)){
+                    
         list = document.getElementById("mozniOdgovori");
         instructions = document.createElement("label");
         instructions.innerText = "recite eno od spodnjih možnosti";
@@ -82,6 +89,12 @@ function loadQuestion(){
             li.innerText = item;
             list.appendChild(li);
         });
+    } else {
+        //izbrisi seznam moznosti, ki si (morda) napisal v prejsnjem vprasanju
+        list = document.getElementById("mozniOdgovori");
+        while (list.firstChild) {
+            list.removeChild(list.firstChild);
+        }
     }
     ans_type = answer_type;
 }
